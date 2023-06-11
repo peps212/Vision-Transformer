@@ -4,7 +4,6 @@ from torch.utils.data import DataLoader
 
 NUM_WORKERS = os.cpu_count()
 
-print(NUM_WORKERS)
 
 def create_dateloaders(
     train_dir: str,
@@ -39,8 +38,8 @@ def create_dateloaders(
 
 
     # using ImageFolder to create datasets
-    train_data = datasets.ImageFolder(train_dir, transform=transforms)
-    test_data = datasets.ImageFolder(test_dir, transform=transforms)
+    train_data = datasets.ImageFolder(train_dir, transform=transform)
+    test_data = datasets.ImageFolder(test_dir, transform=transform)
 
     #get class names
     class_names = train_data.classes 
@@ -58,7 +57,7 @@ def create_dateloaders(
         test_data,
         batch_size=batch_size,
         shuffle= True,
-        num_workers=NUM_WORKERS,
+        num_workers=num_workers,
         pin_memory=True,
     )
 
