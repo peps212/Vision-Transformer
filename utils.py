@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 import zipfile
 import matplotlib.pyplot as plt
+import sys
+import requests
 
 def set_seeds(seed: int=42):
     #sets random sets for torch operations 
@@ -28,7 +30,7 @@ def download_data(source: str,
 
         target_file = Path(source).name
         with open(data_path / target_file, "wb") as f: 
-            request = request.get(source)
+            request = requests.get(source)
             print(f"downloading {target_file} from {source}")
             f.write(request.content)
 
@@ -85,3 +87,9 @@ def save_model(model: torch.nn.Module,
     
     print(f"saving model to {model_save_path}")
     torch.save(obj=model.state_dict(), f=model_save_path)
+
+
+
+if __name__ == "__main__":
+    args = sys.argv
+    globals()[args[1]](*args[2:])
