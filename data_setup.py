@@ -4,7 +4,6 @@ from torch.utils.data import DataLoader
 
 NUM_WORKERS = os.cpu_count()
 
-
 def create_dateloaders(
     train_dir: str,
     test_dir: str, 
