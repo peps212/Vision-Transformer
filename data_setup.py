@@ -63,3 +63,26 @@ def create_dateloaders(
 
 
     return train_dataloader, test_dataloader, class_names
+
+
+def get_dataloaders():
+
+    train_dir = "data/food_images/train"
+    test_dir = "data/food_images/test"
+    BATCH_SIZE = 128
+
+    # Create transforms 
+    IMG_SIZE = 224
+    data_transforms = transforms.Compose([
+        transforms.Resize((IMG_SIZE,IMG_SIZE)),
+        transforms.ToTensor()
+        ])
+    
+
+    train_dataloader, test_dataloader, class_names = create_dateloaders(
+    train_dir=train_dir,
+    test_dir=test_dir,
+    transform=data_transforms,
+    batch_size=BATCH_SIZE)
+
+    return train_dataloader
