@@ -40,21 +40,6 @@ class PatchEmbedding(torch.nn.Module):
         return x_flattened.permute(0,2,1)
     
 
-
-
-train_dataloader = data_setup.get_dataloaders()
-
-image_batch, label_batch = next(iter(train_dataloader))
-
-image = image_batch[0]
-
-patchify = PatchEmbedding(in_channels=3, patch_size=16, embedding_dim=768)
-
-processed_image = patchify(image.unsqueeze(0))
-print(processed_image.shape)
-
-
-
 class MultiheadSelfAttentionBlock(torch.nn.Module):
     #Creates a multihead self attention block
 
@@ -73,7 +58,7 @@ class MultiheadSelfAttentionBlock(torch.nn.Module):
         self.multihead_attn = torch.nn.MultiheadAttention(embed_dim=embedding_dim,
                                                           num_heads=num_heads,
                                                           dropout=attn_dropout,
-                                                          batch_firts=True)
+                                                          batch_first=True)
         
 
     def forward(self, x):
@@ -164,7 +149,7 @@ class ViT(torch.nn.Module):
         self.num_patches = (img_size * img_size) // patch_size**2
 
         #create learnable class embedding
-        self.class_embedding = torch.nn.Parameters(data=torch.randn(1,1, embedding_dim), requires_grad=True)
+        self.class_embedding = torch.nn.Parameter(data=torch.randn(1,1, embedding_dim), requires_grad=True)
 
         #Create learnable position embedding
         self.position_embedding = torch.nn.Parameter(data=torch.randn(1, self.num_patches+1, embedding_dim),
