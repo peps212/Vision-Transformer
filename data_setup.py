@@ -69,10 +69,10 @@ def get_dataloaders():
 
     train_dir = "data/food_images/train"
     test_dir = "data/food_images/test"
-    BATCH_SIZE = 128
+    BATCH_SIZE = 16
 
     # Create transforms 
-    IMG_SIZE = 224
+    IMG_SIZE = 224 #128
     data_transforms = transforms.Compose([
         transforms.Resize((IMG_SIZE,IMG_SIZE)),
         transforms.ToTensor()
@@ -85,4 +85,4 @@ def get_dataloaders():
     transform=data_transforms,
     batch_size=BATCH_SIZE)
 
-    return train_dataloader
+    return train_dataloader, test_dataloader
