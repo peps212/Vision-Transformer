@@ -24,5 +24,5 @@ results = train(model=vit,
                 test_dataloader=test_dataloader,
                 optimizer=optimizer,
                 loss_fn=loss_fn,
-                epochs=10,
+                epochs=20,
                 device="cuda")
