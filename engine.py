@@ -1,5 +1,4 @@
 import torch
-
 from tqdm.auto import tqdm
 from typing import Dict, List, Tuple
 
@@ -28,10 +27,13 @@ def train_step(model: torch.nn.Module,
 
 
     #Put model in train mode
+    model.to(device)
     model.train()
 
     #Setup train loss and train accuracy values
     train_loss, train_acc = 0, 0
+
+
 
     #Loop through data loader data batches
     for batch, (X, y) in enumerate(dataloader):
@@ -89,6 +91,7 @@ def test_step(model: torch.nn.Module,
 #     (0.0223, 0.8985)
 
     #Init Eval mode for the model
+    model.to(device)
     model.eval()
 
     #setup test loss and test accuracy values
@@ -109,7 +112,7 @@ def test_step(model: torch.nn.Module,
             test_loss += loss.item()
 
             #3. Calculate and accumulate accuracy
-            test_pred_labels = test_pred_logits.argmsx(dim=1)
+            test_pred_labels = test_pred_logits.argmax(dim=1)
             test_acc += ((test_pred_labels == y).sum().item()/len(test_pred_labels))
 
     # Adjust metrics to get average loss and accuracy per batch
@@ -175,6 +178,7 @@ def train(model: torch.nn.Module,
         test_loss, test_acc = test_step(model=model,
                                         dataloader=test_dataloader,
                                         loss_fn=loss_fn,
+                                        optimizer=optimizer,
                                         device=device)
         
         #print
